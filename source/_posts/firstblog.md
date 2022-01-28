@@ -1,0 +1,17 @@
+---
+title: my first blog
+date: 2022/1/12 7:07:02
+tags:
+- moments
+categories:
+- moments
+
+
+---
+
+Welcome!
+
+This is my first blog.
+
+Thanks for your coming and support.
+
