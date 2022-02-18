@@ -6,7 +6,7 @@ hexo.extend.generator.register('customcategory', function(locals){
   var realestatePosts = locals.posts.filter(function(x) {
     return x.categories.data[0].name == filteredCategory;
   });
-
+  realestatePosts = realestatePosts.reverse();
   return pagination('moments', realestatePosts, {
     perPage: 10,
     layout: ['customcategory']
