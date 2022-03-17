@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liyun-666.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="我知道我們以前是朋友，告訴我，我是誰。很多人問我為什麼選擇拆彈，在他心裡，正義凌駕在他的生命之上。——————————————————-《拆弹专家 2》   拆炸弹作为一种高难度的工作，往往承担着高风险，即使是拆弹专家，最后也付出了自己的生命。本次实验需要我们输入 6个特定的字符串 才能够拆除炸弹，否则炸弹将会爆炸。我们将采取逆向的方式找出特定的字符串。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lab2 Bomblab(拆除炸弹实验)">
+<meta property="og:url" content="https://liyun-666.github.io/2022/03/14/2022-3-14/index.html">
+<meta property="og:site_name" content="黎酝的博客">
+<meta property="og:description" content="我知道我們以前是朋友，告訴我，我是誰。很多人問我為什麼選擇拆彈，在他心裡，正義凌駕在他的生命之上。——————————————————-《拆弹专家 2》   拆炸弹作为一种高难度的工作，往往承担着高风险，即使是拆弹专家，最后也付出了自己的生命。本次实验需要我们输入 6个特定的字符串 才能够拆除炸弹，否则炸弹将会爆炸。我们将采取逆向的方式找出特定的字符串。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_1.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_2.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_3.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_4.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_5.png">
+<meta property="article:published_time" content="2022-03-14T05:33:05.000Z">
+<meta property="article:modified_time" content="2022-03-14T05:33:05.000Z">
+<meta property="article:author" content="黎酝">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liyun-666.github.io/2022/03/14/2022-3-14/2022-3-14_1.png">
+
+
+<link rel="canonical" href="https://liyun-666.github.io/2022/03/14/2022-3-14/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liyun-666.github.io/2022/03/14/2022-3-14/","path":"2022/03/14/2022-3-14/","title":"lab2 Bomblab(拆除炸弹实验)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>lab2 Bomblab(拆除炸弹实验) | 黎酝的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">黎酝的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-resources"><a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a></li>
+        <li class="menu-item menu-item-moments"><a href="/moments/" rel="section"><i class="fa fa-trash fa-fw"></i>日常</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#step-0"><span class="nav-number">1.</span> <span class="nav-text">step 0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-1"><span class="nav-number">2.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-2"><span class="nav-number">3.</span> <span class="nav-text">step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-3"><span class="nav-number">4.</span> <span class="nav-text">step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-4"><span class="nav-number">5.</span> <span class="nav-text">step 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-5"><span class="nav-number">6.</span> <span class="nav-text">step 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-6"><span class="nav-number">7.</span> <span class="nav-text">step 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">7.1.</span> <span class="nav-text">1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">7.2.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">7.3.</span> <span class="nav-text">3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4"><span class="nav-number">7.4.</span> <span class="nav-text">4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5"><span class="nav-number">7.5.</span> <span class="nav-text">5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-secret"><span class="nav-number">8.</span> <span class="nav-text">step secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%86%E9%99%A4%E7%82%B8%E5%BC%B9"><span class="nav-number">9.</span> <span class="nav-text">拆除炸弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">实验总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="黎酝"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">黎酝</p>
+  <div class="site-description" itemprop="description">爱意东升日落，浪漫至死不渝</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiYun-666" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiYun-666" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liyun2389231032@gmail.com" title="E-Mail → mailto:liyun2389231032@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/03/14/2022-3-14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="黎酝">
+      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黎酝的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lab2 Bomblab(拆除炸弹实验)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-14 13:33:05" itemprop="dateCreated datePublished" datetime="2022-03-14T13:33:05+08:00">2022-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>我知道我們以前是朋友，告訴我，我是誰。<br>很多人問我為什麼選擇拆彈，在他心裡，正義凌駕在他的生命之上。<br>——————————————————-《拆弹专家 2》</p>
+</blockquote>
+<p><img src="/2022/03/14/2022-3-14/2022-3-14_1.png"><br><img src="/2022/03/14/2022-3-14/2022-3-14_2.png"><br><img src="/2022/03/14/2022-3-14/2022-3-14_3.png"></p>
+<p>拆炸弹作为一种高难度的工作，往往承担着高风险，即使是拆弹专家，最后也付出了自己的生命。本次实验需要我们输入 <code>6个特定的字符串</code> 才能够拆除炸弹，否则炸弹将会爆炸。我们将采取逆向的方式找出特定的字符串。</p>
+<span id="more"></span>
+<h2 id="step-0"><a href="#step-0" class="headerlink" title="step 0"></a>step 0</h2><p>先使用 objdump 反编译出来汇编代码：</p>
+<blockquote>
+<p>objdump -d bomb &gt; bomb.asm</p>
+</blockquote>
+<p>使用 VScode 的 x86 and x86_64 Assembly 插件帮助我们浏览汇编代码。</p>
+<p>可以发现有 1000 多行的汇编代码，其中包括 <code>.init .plt .text .fini</code> 这几个 section。<code>.init</code> 是进程初始化节，<code>.fini</code> 是进程终止节，<code>.plt</code> 是进程链接表。我们直接将重心放在 <code>.text</code> 节—代码节。</p>
+<p>刚开始 <code>start</code> 是程序入口，我们直接往下看到 <code>main</code> 函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">0000000000400da0 &lt;main&gt;:</span><br><span class="line">  400da0:	53                   	push   %rbx</span><br><span class="line">  400da1:	83 ff 01             	cmp    $0x1,%edi</span><br><span class="line">  400da4:	75 10                	jne    400db6 &lt;main+0x16&gt;</span><br><span class="line">  400da6:	48 8b 05 9b 29 20 00 	mov    0x20299b(%rip),%rax        # 603748 &lt;stdin@GLIBC_2.2.5&gt;</span><br><span class="line">  400dad:	48 89 05 b4 29 20 00 	mov    %rax,0x2029b4(%rip)        # 603768 &lt;infile&gt;</span><br><span class="line">  400db4:	eb 63                	jmp    400e19 &lt;main+0x79&gt;</span><br><span class="line">  400db6:	48 89 f3             	mov    %rsi,%rbx</span><br><span class="line">  400db9:	83 ff 02             	cmp    $0x2,%edi</span><br><span class="line">  400dbc:	75 3a                	jne    400df8 &lt;main+0x58&gt;</span><br><span class="line">  400dbe:	48 8b 7e 08          	mov    0x8(%rsi),%rdi</span><br><span class="line">  400dc2:	be b4 22 40 00       	mov    $0x4022b4,%esi</span><br><span class="line">  400dc7:	e8 44 fe ff ff       	call   400c10 &lt;fopen@plt&gt;</span><br><span class="line">  400dcc:	48 89 05 95 29 20 00 	mov    %rax,0x202995(%rip)        # 603768 &lt;infile&gt;</span><br><span class="line">  400dd3:	48 85 c0             	test   %rax,%rax</span><br><span class="line">  400dd6:	75 41                	jne    400e19 &lt;main+0x79&gt;</span><br><span class="line">  400dd8:	48 8b 4b 08          	mov    0x8(%rbx),%rcx</span><br><span class="line">  400ddc:	48 8b 13             	mov    (%rbx),%rdx</span><br><span class="line">  400ddf:	be b6 22 40 00       	mov    $0x4022b6,%esi</span><br><span class="line">  400de4:	bf 01 00 00 00       	mov    $0x1,%edi</span><br><span class="line">  400de9:	e8 12 fe ff ff       	call   400c00 &lt;__printf_chk@plt&gt;</span><br><span class="line">  400dee:	bf 08 00 00 00       	mov    $0x8,%edi</span><br><span class="line">  400df3:	e8 28 fe ff ff       	call   400c20 &lt;exit@plt&gt;</span><br><span class="line">  400df8:	48 8b 16             	mov    (%rsi),%rdx</span><br><span class="line">  400dfb:	be d3 22 40 00       	mov    $0x4022d3,%esi</span><br><span class="line">  400e00:	bf 01 00 00 00       	mov    $0x1,%edi</span><br><span class="line">  400e05:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400e0a:	e8 f1 fd ff ff       	call   400c00 &lt;__printf_chk@plt&gt;</span><br><span class="line">  400e0f:	bf 08 00 00 00       	mov    $0x8,%edi</span><br><span class="line">  400e14:	e8 07 fe ff ff       	call   400c20 &lt;exit@plt&gt;</span><br><span class="line">  400e19:	e8 84 05 00 00       	call   4013a2 &lt;initialize_bomb&gt;</span><br><span class="line">  400e1e:	bf 38 23 40 00       	mov    $0x402338,%edi</span><br><span class="line">  400e23:	e8 e8 fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400e28:	bf 78 23 40 00       	mov    $0x402378,%edi</span><br><span class="line">  400e2d:	e8 de fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400e32:	e8 67 06 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400e37:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400e3a:	e8 a1 00 00 00       	call   400ee0 &lt;phase_1&gt;</span><br><span class="line">  400e3f:	e8 80 07 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400e44:	bf a8 23 40 00       	mov    $0x4023a8,%edi</span><br><span class="line">  400e49:	e8 c2 fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400e4e:	e8 4b 06 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400e53:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400e56:	e8 a1 00 00 00       	call   400efc &lt;phase_2&gt;</span><br><span class="line">  400e5b:	e8 64 07 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400e60:	bf ed 22 40 00       	mov    $0x4022ed,%edi</span><br><span class="line">  400e65:	e8 a6 fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400e6a:	e8 2f 06 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400e6f:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400e72:	e8 cc 00 00 00       	call   400f43 &lt;phase_3&gt;</span><br><span class="line">  400e77:	e8 48 07 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400e7c:	bf 0b 23 40 00       	mov    $0x40230b,%edi</span><br><span class="line">  400e81:	e8 8a fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400e86:	e8 13 06 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400e8b:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400e8e:	e8 79 01 00 00       	call   40100c &lt;phase_4&gt;</span><br><span class="line">  400e93:	e8 2c 07 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400e98:	bf d8 23 40 00       	mov    $0x4023d8,%edi</span><br><span class="line">  400e9d:	e8 6e fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400ea2:	e8 f7 05 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400ea7:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400eaa:	e8 b3 01 00 00       	call   401062 &lt;phase_5&gt;</span><br><span class="line">  400eaf:	e8 10 07 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400eb4:	bf 1a 23 40 00       	mov    $0x40231a,%edi</span><br><span class="line">  400eb9:	e8 52 fc ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  400ebe:	e8 db 05 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  400ec3:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400ec6:	e8 29 02 00 00       	call   4010f4 &lt;phase_6&gt;</span><br><span class="line">  400ecb:	e8 f4 06 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  400ed0:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400ed5:	5b                   	pop    %rbx</span><br><span class="line">  400ed6:	c3                   	ret    </span><br><span class="line">  400ed7:	90                   	nop</span><br><span class="line">  400ed8:	90                   	nop</span><br><span class="line">  400ed9:	90                   	nop</span><br><span class="line">  400eda:	90                   	nop</span><br><span class="line">  400edb:	90                   	nop</span><br><span class="line">  400edc:	90                   	nop</span><br><span class="line">  400edd:	90                   	nop</span><br><span class="line">  400ede:	90                   	nop</span><br><span class="line">  400edf:	90                   	nop</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>400e37:    48 89 c7                 mov    %rax,%rdi<br>400e3a:    e8 a1 00 00 00           call   400ee0 <phase_1></phase_1></p>
+</blockquote>
+<p>可以看到在调用 <code>phase_1</code> 之前，将 <code>rax</code> 寄存器的值(输入的字符串)移动到了 <code>rdi</code> 寄存器中，<code>rdi</code> 寄存器保存着第一个参数，即输入的字符串。</p>
+<h2 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h2><p>接着调用 phase_1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	call   401338 &lt;strings_not_equal&gt;</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt;</span><br><span class="line">  400ef2:	e8 43 05 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  400efb:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p>先移动栈指针，然后把 <code>0x402400</code> 移动到寄存器 <code>esi</code> 中，<code>esi</code> 是第二个参数，然后调用 <code>strings_not_equal</code>，判断第一个参数和第二个参数是否相等，即输入的字符串和 <code>0x402400</code> 中的内容是否相等，接着如果寄存器 <code>eax</code> 的值为 <code>0</code>，则跳转至 <code>0x400ef7</code>，否则调用 <code>explode_bomb</code> 引爆炸弹。所以我们只需要查看 <code>0x402400</code> 位置的内容即可。<br><img src="/2022/03/14/2022-3-14/2022-3-14_4.png"><br>可以发现第一个字符串的内容为 <code>&quot;Border relations with Canada have never been better.&quot;</code></p>
+<h2 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">0000000000400efc &lt;phase_2&gt;:</span><br><span class="line">  400efc:	55                   	push   %rbp</span><br><span class="line">  400efd:	53                   	push   %rbx</span><br><span class="line">  400efe:	48 83 ec 28          	sub    $0x28,%rsp</span><br><span class="line">  400f02:	48 89 e6             	mov    %rsp,%rsi</span><br><span class="line">  400f05:	e8 52 05 00 00       	call   40145c &lt;read_six_numbers&gt;</span><br><span class="line">  400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp)</span><br><span class="line">  400f0e:	74 20                	je     400f30 &lt;phase_2+0x34&gt;</span><br><span class="line">  400f10:	e8 25 05 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400f15:	eb 19                	jmp    400f30 &lt;phase_2+0x34&gt;</span><br><span class="line">  400f17:	8b 43 fc             	mov    -0x4(%rbx),%eax</span><br><span class="line">  400f1a:	01 c0                	add    %eax,%eax</span><br><span class="line">  400f1c:	39 03                	cmp    %eax,(%rbx)</span><br><span class="line">  400f1e:	74 05                	je     400f25 &lt;phase_2+0x29&gt;</span><br><span class="line">  400f20:	e8 15 05 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400f25:	48 83 c3 04          	add    $0x4,%rbx</span><br><span class="line">  400f29:	48 39 eb             	cmp    %rbp,%rbx</span><br><span class="line">  400f2c:	75 e9                	jne    400f17 &lt;phase_2+0x1b&gt;</span><br><span class="line">  400f2e:	eb 0c                	jmp    400f3c &lt;phase_2+0x40&gt;</span><br><span class="line">  400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx</span><br><span class="line">  400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp</span><br><span class="line">  400f3a:	eb db                	jmp    400f17 &lt;phase_2+0x1b&gt;</span><br><span class="line">  400f3c:	48 83 c4 28          	add    $0x28,%rsp</span><br><span class="line">  400f40:	5b                   	pop    %rbx</span><br><span class="line">  400f41:	5d                   	pop    %rbp</span><br><span class="line">  400f42:	c3                   	ret </span><br></pre></td></tr></table></figure>
+<p>前面设置一些寄存器的值，<code>push %rbp</code> <code>push %rbx</code>，然后 <code>sub $0x28,%rsp</code>，并且 <code>mov %rsp,%rsi</code>，猜测是把六个数字保存在栈中，因为栈申请了 <code>0x28</code> 的大小，而且 <code>rsi</code> (第二个参数) 保存着 <code>rsp</code> 的值，然后调用 <code>read_six_numbers</code>，猜测是读取 6 个数字，存入 <code>rsp</code> 中，我们将随便输入六个数字，可以用 <code>1 2 3 4 5 6</code> 尝试一下。首先在 <code>0x400f0a</code> 处打上断点，运行，输入第一阶段的正确答案，再输入 <code>1 2 3 4 5 6</code>，此时 <code>x /32xb $rsp</code> 查看栈寄存器内容。</p>
+<blockquote>
+<p>(gdb) break *0x400f0a<br>Breakpoint 1 at 0x400f0a<br>(gdb) run<br>Starting program: /home/rengar/Downloads/bomb/bomb<br>[Thread debugging using libthread_db enabled]<br>Using host libthread_db library “/usr/lib/libthread_db.so.1”.<br>Welcome to my fiendish little bomb. You have 6 phases with<br>which to blow yourself up. Have a nice day!<br>Border relations with Canada have never been better.<br>Phase 1 defused. How about the next one?<br>1 2 3 4 5 6<br>Breakpoint 1, 0x0000000000400f0a in phase_2 ()<br>(gdb) x /32xb $rsp<br>0x7fffffffdc60: 0x01    0x00    0x00    0x00    0x02    0x00    0x00    0x00<br>0x7fffffffdc68: 0x03    0x00    0x00    0x00    0x04    0x00    0x00    0x00<br>0x7fffffffdc70: 0x05    0x00    0x00    0x00    0x06    0x00    0x00    0x00<br>0x7fffffffdc78: 0x31    0x14    0x40    0x00    0x00    0x00    0x00    0x00</p>
+</blockquote>
+<p>发现 <code>1 2 3 4 5 6</code> 被连续保存在了栈 <code>rsp</code> 中，其中 <code>6</code> 后面的 <code>0x00401431</code> 是某个函数的入口地址。断点处代码是将 <code>1</code> 和 <code>rsp</code> 比较，如果 <code>rsp</code> 不等于 <code>1</code>，则调用 <code>explode_bomb</code>，所以输入的字符串中第一个数必须是 <code>1</code>，然后跳转到 <code>400f30: lea 0x4(%rsp),%rbx</code>，将 <code>下一个数的地址值</code> 送至 <code>rbx</code> 寄存器，再将 <code>返回地址值</code> 送入 <code>rbp</code> 寄存器，然后跳转至 <code>400f17: mov -0x4(%rbx),%eax</code>，将第一个数送入 <code>eax</code>，然后 <code>eax</code> * 2，比较 <code>eax</code> 和 <code>rbx</code>，相等则跳转到 <code>400f25: add $0x4,%rbx</code>，否则引爆炸弹，所以第二个数即 <code>rbx</code> 的值必须是 2，然后 <code>rbx + 0x4</code>，<code>rbx</code> 的值变为第三个数，和 <code>rbp</code> (返回地址) 比较，不相等的话就跳转至 <code>400f17: mov -0x4(%rbx),%eax</code>，将第二个数送入 <code>eax</code>，然后 <code>eax</code> * 2，比较 <code>eax</code> 和 <code>rbx</code>，相等则跳转到 <code>400f25: add $0x4,%rbx</code>，否则引爆炸弹，所以第三个数即 <code>rbx</code> 的值必须是 4，循环往下，说明六个数的值应为 <code>1 2 4 8 16 32</code>，然后此时 <code>400f2e: jmp 400f3c &lt;phase_2+0x40&gt;</code>，跳转至 <code>400f3c: add $0x28,%rsp</code>，恢复 <code>rsp</code> 的位置，弹出 <code>rbx</code> <code>rbp</code>。</p>
+<p>所以第二个字符串内容应为 <code>&quot;1 2 4 8 16 32&quot;</code></p>
+<h2 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">0000000000400f43 &lt;phase_3&gt;:</span><br><span class="line">  400f43:	48 83 ec 18          	sub    $0x18,%rsp</span><br><span class="line">  400f47:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</span><br><span class="line">  400f4c:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  400f51:	be cf 25 40 00       	mov    $0x4025cf,%esi</span><br><span class="line">  400f56:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400f5b:	e8 90 fc ff ff       	call   400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line">  400f60:	83 f8 01             	cmp    $0x1,%eax</span><br><span class="line">  400f63:	7f 05                	jg     400f6a &lt;phase_3+0x27&gt;</span><br><span class="line">  400f65:	e8 d0 04 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400f6a:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)</span><br><span class="line">  400f6f:	77 3c                	ja     400fad &lt;phase_3+0x6a&gt;</span><br><span class="line">  400f71:	8b 44 24 08          	mov    0x8(%rsp),%eax</span><br><span class="line">  400f75:	ff 24 c5 70 24 40 00 	jmp    *0x402470(,%rax,8)</span><br><span class="line">  400f7c:	b8 cf 00 00 00       	mov    $0xcf,%eax</span><br><span class="line">  400f81:	eb 3b                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400f83:	b8 c3 02 00 00       	mov    $0x2c3,%eax</span><br><span class="line">  400f88:	eb 34                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400f8a:	b8 00 01 00 00       	mov    $0x100,%eax</span><br><span class="line">  400f8f:	eb 2d                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400f91:	b8 85 01 00 00       	mov    $0x185,%eax</span><br><span class="line">  400f96:	eb 26                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400f98:	b8 ce 00 00 00       	mov    $0xce,%eax</span><br><span class="line">  400f9d:	eb 1f                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400f9f:	b8 aa 02 00 00       	mov    $0x2aa,%eax</span><br><span class="line">  400fa4:	eb 18                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400fa6:	b8 47 01 00 00       	mov    $0x147,%eax</span><br><span class="line">  400fab:	eb 11                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400fad:	e8 88 04 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400fb2:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400fb7:	eb 05                	jmp    400fbe &lt;phase_3+0x7b&gt;</span><br><span class="line">  400fb9:	b8 37 01 00 00       	mov    $0x137,%eax</span><br><span class="line">  400fbe:	3b 44 24 0c          	cmp    0xc(%rsp),%eax</span><br><span class="line">  400fc2:	74 05                	je     400fc9 &lt;phase_3+0x86&gt;</span><br><span class="line">  400fc4:	e8 71 04 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  400fc9:	48 83 c4 18          	add    $0x18,%rsp</span><br><span class="line">  400fcd:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p>第 6 行调用了库函数 <code>sscanf</code>，且第 4 行 <code>mov $0x4025cf,%esi</code>，打个断点使用 gdb 查看一下 <code>0x4025cf</code> 中的内容：</p>
+<blockquote>
+<p>Breakpoint 1, 0x0000000000400f51 in phase_3 ()<br>(gdb) x /s 0x4025cf<br>0x4025cf:       “%d %d”<br>(gdb) </p>
+</blockquote>
+<p>有两个整数，猜测是第 2、3 行的 <code>rcx</code> 和 <code>rdx</code>。即：</p>
+<blockquote>
+<p>sscanf(input, “%d,%d”, &amp;a, &amp;b)</p>
+</blockquote>
+<p><code>0x8(%rsp)</code> 保存着 <code>a</code>，<code>0xc(%rsp)</code> 保存着 <code>b</code>。</p>
+<p><code>400f60:    cmp $0x1,%eax</code> 将 <code>eax</code> 与 <code>1</code> 进行比较，此时 <code>eax</code> 存放库函数 <code>sscanf</code> 的返回值，正常来说是 2，所以 <code>400f63: jg 400f6a &lt;phase_3+0x27&gt;</code> 会跳转至 <code>0x400f6a</code>。<code>400f6a: cmpl $0x7,0x8(%rsp)</code> 将 <code>rsp+0x8</code> 中存放的值与 <code>0x7</code> 进行比较如果大于 0x7 则跳到 <code>400fad</code>的位置引爆炸弹。接下来 <code>400f71: mov 0x8(%rsp),%eax</code> 把 a 传送给 <code>eax</code>，然后 <code>400f75: jmp *0x402470(,%rax,8)</code> ，查看一下 <code>0x402470</code> 的内容：</p>
+<blockquote>
+<p>(gdb) x /32xb 0x402470<br>0x402470:       0x7c    0x0f    0x40    0x00    0x00    0x00    0x00    0x00<br>0x402478:       0xb9    0x0f    0x40    0x00    0x00    0x00    0x00    0x00<br>0x402480:       0x83    0x0f    0x40    0x00    0x00    0x00    0x00    0x00<br>0x402488:       0x8a    0x0f    0x40    0x00    0x00    0x00    0x00    0x00</p>
+</blockquote>
+<p>可以看出是根据 <code>rax</code> 的不同跳转至不同的地方，应该是一个 <code>switch</code> 语句。第一遍输入 1 2 查看一下 <code>rax</code> 的内容：</p>
+<blockquote>
+<p>(gdb) print $rax    </p>
+<blockquote>
+<p>$1 = 1</p>
+</blockquote>
+</blockquote>
+<p>再输入 4 8 查看一下：</p>
+<blockquote>
+<p>(gdb) print $rax    </p>
+<blockquote>
+<p>$2 = 4</p>
+</blockquote>
+</blockquote>
+<p>多次尝试后发现 <code>rax</code> 的值就是第一个输入的数。所以第一个输入的数需要小于 7，然后程序会根据输入的不同跳转至不同的位置执行代码，不同的位置的代码都是一样的，把一个值送至 <code>eax</code>，然后跳转至 <code>400fbe: cmp 0xc(%rsp),%eax</code>，如果 <code>eax</code> 与输入的第二个数相等的话就跳过 <code>bomb</code>，所以这里有多个答案，选择一个即可，这里我们选择第一个输入的数为 <code>0</code>，则 <code>eax</code> 会被赋值 <code>0xcf</code>，即 <code>207</code>。</p>
+<p>第三个字符串答案之一为 <code>&quot;0 207&quot;</code></p>
+<h2 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">000000000040100c &lt;phase_4&gt;:</span><br><span class="line">  40100c:	48 83 ec 18          	sub    $0x18,%rsp</span><br><span class="line">  401010:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</span><br><span class="line">  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi</span><br><span class="line">  40101f:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  401024:	e8 c7 fb ff ff       	call   400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line">  401029:	83 f8 02             	cmp    $0x2,%eax</span><br><span class="line">  40102c:	75 07                	jne    401035 &lt;phase_4+0x29&gt;</span><br><span class="line">  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp)</span><br><span class="line">  401033:	76 05                	jbe    40103a &lt;phase_4+0x2e&gt;</span><br><span class="line">  401035:	e8 00 04 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx</span><br><span class="line">  40103f:	be 00 00 00 00       	mov    $0x0,%esi</span><br><span class="line">  401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi</span><br><span class="line">  401048:	e8 81 ff ff ff       	call   400fce &lt;func4&gt;</span><br><span class="line">  40104d:	85 c0                	test   %eax,%eax</span><br><span class="line">  40104f:	75 07                	jne    401058 &lt;phase_4+0x4c&gt;</span><br><span class="line">  401051:	83 7c 24 0c 00       	cmpl   $0x0,0xc(%rsp)</span><br><span class="line">  401056:	74 05                	je     40105d &lt;phase_4+0x51&gt;</span><br><span class="line">  401058:	e8 dd 03 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  40105d:	48 83 c4 18          	add    $0x18,%rsp</span><br><span class="line">  401061:	c3                   	ret   </span><br></pre></td></tr></table></figure>
+<p>前面跟 step 3 一样，输入两个数保存在 <code>0x8(%rsp)</code> <code>0xc(%rsp)</code> 中，然后：</p>
+<blockquote>
+<p>40103a:    ba 0e 00 00 00           mov    $0xe,%edx<br>40103f:    be 00 00 00 00           mov    $0x0,%esi<br>401044:    8b 7c 24 08              mov    0x8(%rsp),%edi<br>401048:    e8 81 ff ff ff           call   400fce <func4></func4></p>
+</blockquote>
+<p>修改三个参数寄存器，然后调用 <code>func4</code>。先看一眼 <code>bomb</code>，<code>eax</code> 不为 0 就爆炸，然后输入的第二个数不为 0 就爆炸。</p>
+<blockquote>
+<p>%edx: 14, %esi: 0, %edi: 输入的第一个数，%eax 需要为 0</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">0000000000400fce &lt;func4&gt;:</span><br><span class="line">  400fce:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  400fd2:	89 d0                	mov    %edx,%eax</span><br><span class="line">  400fd4:	29 f0                	sub    %esi,%eax</span><br><span class="line">  400fd6:	89 c1                	mov    %eax,%ecx</span><br><span class="line">  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx</span><br><span class="line">  400fdb:	01 c8                	add    %ecx,%eax</span><br><span class="line">  400fdd:	d1 f8                	sar    %eax</span><br><span class="line">  400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx</span><br><span class="line">  400fe2:	39 f9                	cmp    %edi,%ecx</span><br><span class="line">  400fe4:	7e 0c                	jle    400ff2 &lt;func4+0x24&gt;</span><br><span class="line">  400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx</span><br><span class="line">  400fe9:	e8 e0 ff ff ff       	call   400fce &lt;func4&gt;</span><br><span class="line">  400fee:	01 c0                	add    %eax,%eax</span><br><span class="line">  400ff0:	eb 15                	jmp    401007 &lt;func4+0x39&gt;</span><br><span class="line">  400ff2:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400ff7:	39 f9                	cmp    %edi,%ecx</span><br><span class="line">  400ff9:	7d 0c                	jge    401007 &lt;func4+0x39&gt;</span><br><span class="line">  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi</span><br><span class="line">  400ffe:	e8 cb ff ff ff       	call   400fce &lt;func4&gt;</span><br><span class="line">  401003:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax</span><br><span class="line">  401007:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  40100b:	c3                   	ret  </span><br></pre></td></tr></table></figure>
+<p>直接看有点难，可以逆向为 C 语言来看，这里参考了网上的逆向结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">int</span> a2, <span class="keyword">int</span> x)</span> <span class="comment">// a1 = %edx a2 = %esi x = %edi</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> b = (a1 - a2) &gt;&gt; <span class="number">31</span>;  <span class="comment">// b = 0</span></span><br><span class="line">    <span class="keyword">int</span> result = ((a1-a2) + b) &gt;&gt; <span class="number">1</span>; <span class="comment">// result = 111 = 7</span></span><br><span class="line">    b = result + a2;          <span class="comment">// b = 7</span></span><br><span class="line">    <span class="keyword">if</span>(b == x) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(b &lt; x) </span><br><span class="line">    &#123;</span><br><span class="line">        result = fun(a1, b + <span class="number">1</span>, x);</span><br><span class="line">        <span class="keyword">return</span> result * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        result = fun(b - <span class="number">1</span>, a2, x);</span><br><span class="line">        <span class="keyword">return</span> result * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可知最简单的一种令返回值为 0 的情况是 b == x，还有几种情况可以自行研究，这里选择 x = 7 作为答案。</p>
+<p>第四个字符串答案之一为 <code>&quot;7 0&quot;</code></p>
+<h2 id="step-5"><a href="#step-5" class="headerlink" title="step 5"></a>step 5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">0000000000401062 &lt;phase_5&gt;:</span><br><span class="line">  401062:	53                   	push   %rbx</span><br><span class="line">  401063:	48 83 ec 20          	sub    $0x20,%rsp</span><br><span class="line">  401067:	48 89 fb             	mov    %rdi,%rbx</span><br><span class="line">  40106a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</span><br><span class="line">  401071:	00 00 </span><br><span class="line">  401073:	48 89 44 24 18       	mov    %rax,0x18(%rsp)</span><br><span class="line">  401078:	31 c0                	xor    %eax,%eax</span><br><span class="line">  40107a:	e8 9c 02 00 00       	call   40131b &lt;string_length&gt;</span><br><span class="line">  40107f:	83 f8 06             	cmp    $0x6,%eax</span><br><span class="line">  401082:	74 4e                	je     4010d2 &lt;phase_5+0x70&gt;</span><br><span class="line">  401084:	e8 b1 03 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  401089:	eb 47                	jmp    4010d2 &lt;phase_5+0x70&gt;</span><br><span class="line">  40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx</span><br><span class="line">  40108f:	88 0c 24             	mov    %cl,(%rsp)</span><br><span class="line">  401092:	48 8b 14 24          	mov    (%rsp),%rdx</span><br><span class="line">  401096:	83 e2 0f             	and    $0xf,%edx</span><br><span class="line">  401099:	0f b6 92 b0 24 40 00 	movzbl 0x4024b0(%rdx),%edx</span><br><span class="line">  4010a0:	88 54 04 10          	mov    %dl,0x10(%rsp,%rax,1)</span><br><span class="line">  4010a4:	48 83 c0 01          	add    $0x1,%rax</span><br><span class="line">  4010a8:	48 83 f8 06          	cmp    $0x6,%rax</span><br><span class="line">  4010ac:	75 dd                	jne    40108b &lt;phase_5+0x29&gt;</span><br><span class="line">  4010ae:	c6 44 24 16 00       	movb   $0x0,0x16(%rsp)</span><br><span class="line">  4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi</span><br><span class="line">  4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</span><br><span class="line">  4010bd:	e8 76 02 00 00       	call   401338 &lt;strings_not_equal&gt;</span><br><span class="line">  4010c2:	85 c0                	test   %eax,%eax</span><br><span class="line">  4010c4:	74 13                	je     4010d9 &lt;phase_5+0x77&gt;</span><br><span class="line">  4010c6:	e8 6f 03 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  4010cb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)</span><br><span class="line">  4010d0:	eb 07                	jmp    4010d9 &lt;phase_5+0x77&gt;</span><br><span class="line">  4010d2:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  4010d7:	eb b2                	jmp    40108b &lt;phase_5+0x29&gt;</span><br><span class="line">  4010d9:	48 8b 44 24 18       	mov    0x18(%rsp),%rax</span><br><span class="line">  4010de:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax</span><br><span class="line">  4010e5:	00 00 </span><br><span class="line">  4010e7:	74 05                	je     4010ee &lt;phase_5+0x8c&gt;</span><br><span class="line">  4010e9:	e8 42 fa ff ff       	call   400b30 &lt;__stack_chk_fail@plt&gt;</span><br><span class="line">  4010ee:	48 83 c4 20          	add    $0x20,%rsp</span><br><span class="line">  4010f2:	5b                   	pop    %rbx</span><br><span class="line">  4010f3:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p><code>40108b: movzbl (%rbx,%rax,1),%ecx</code> 此时 <code>rbx</code> 存放着输入的字符串位置，<code>rax</code> 为 0，将输入字符串第一个字节赋值给 <code>ecx</code>，后面三条指令把低四位放在 <code>edx</code>。<code>401099: movzbl 0x4024b0(%rdx),%edx</code> 把 <code>0x4024b0+rdx</code> 的一个字节放入 <code>edx</code> 的低 16 位中。下一行将这 16 位复制到了 <code>rsp+0x10+rax</code> 的位置中。需要循环执行 6 次。</p>
+<p><code>4010ae: movb $0x0,0x16(%rsp)</code> 把终止符写入 <code>rsp+0x16</code>。比较 <code>rsp+0x10</code> 和 <code>0x40245e</code> 的字符串是否相等，所以找到 <code>rsp+0x10</code> 的字符串来源，应该是 <code>4010a0: mov %dl,0x10(%rsp,%rax,1)</code>，来源是 <code>dl</code>，<code>dl</code> 的来源是 <code>edx</code>，而 <code>edx</code> 来源 <code>0x4024b0(%rdx)</code>，而 <code>rdx</code> 来源输入字符串。</p>
+<p>我们注意到前面为什么绕来绕去的，是因为我们希望 <code>rdx</code> 存取低 4 位，字符 <code>&#39;A&#39;</code> 的 ASCII 码为 <code>1000001</code>，低 4 位为 1，字符 <code>&#39;a&#39;</code> 的 ASCII 码为 <code>1100001</code>，低 4 位也为 1，所以输入的字符串为 ‘b’ 时，<code>rdx</code> 的值为 2，所以 <code>rdx</code> 其实存取的就是字符相对于 ‘a’ 或者 ‘A’ 的偏移。</p>
+<p>接下来查看一下 <code>0x4024b0</code> 和 <code>0x40245e</code> 的字符串内容：</p>
+<blockquote>
+<p>(gdb) x /s 0x4024b0<br>0x4024b0 &lt;array.3449&gt;:  “maduiersnfotvbylSo you think you can stop the bomb with ctrl-c, do you?”<br>(gdb) x /s 0x40245e<br>0x40245e:       “flyers”</p>
+</blockquote>
+<p>根据输入的字符串相对于 <code>&#39;a&#39;</code> 或者 <code>&#39;A&#39;</code> 的偏移从 <code>0x4024b0</code> 中去获取字符，然后与 <code>flyers</code> 比较，首先 <code>i</code> 的低 4 位是 <code>9</code>，所以取出的字符是 ‘f’，然后 <code>o</code> 的低 4 位是 <code>15</code>，取出的字符是 <code>l</code>，所以输入 <code>ionefg</code> 就可以取出 <code>flyers</code>。</p>
+<p>第五个字符串答案之一为 <code>&quot;ionefg&quot;</code></p>
+<h2 id="step-6"><a href="#step-6" class="headerlink" title="step 6"></a>step 6</h2><p>这一步的代码量有点大，我们逐步的分段进行分析。</p>
+<h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">00000000004010f4 &lt;phase_6&gt;:</span><br><span class="line">  4010f4:	41 56                	push   %r14</span><br><span class="line">  4010f6:	41 55                	push   %r13</span><br><span class="line">  4010f8:	41 54                	push   %r12</span><br><span class="line">  4010fa:	55                   	push   %rbp</span><br><span class="line">  4010fb:	53                   	push   %rbx</span><br><span class="line">  4010fc:	48 83 ec 50          	sub    $0x50,%rsp</span><br><span class="line">  401100:	49 89 e5             	mov    %rsp,%r13</span><br><span class="line">  401103:	48 89 e6             	mov    %rsp,%rsi</span><br><span class="line">  401106:	e8 51 03 00 00       	call   40145c &lt;read_six_numbers&gt;</span><br><span class="line">  40110b:	49 89 e6             	mov    %rsp,%r14</span><br><span class="line">  40110e:	41 bc 00 00 00 00    	mov    $0x0,%r12d</span><br><span class="line">  401114:	4c 89 ed             	mov    %r13,%rbp</span><br><span class="line">  401117:	41 8b 45 00          	mov    0x0(%r13),%eax</span><br><span class="line">  40111b:	83 e8 01             	sub    $0x1,%eax</span><br><span class="line">  40111e:	83 f8 05             	cmp    $0x5,%eax</span><br><span class="line">  401121:	76 05                	jbe    401128 &lt;phase_6+0x34&gt;</span><br><span class="line">  401123:	e8 12 03 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  401128:	41 83 c4 01          	add    $0x1,%r12d</span><br><span class="line">  40112c:	41 83 fc 06          	cmp    $0x6,%r12d</span><br><span class="line">  401130:	74 21                	je     401153 &lt;phase_6+0x5f&gt;</span><br><span class="line">  401132:	44 89 e3             	mov    %r12d,%ebx</span><br><span class="line">  401135:	48 63 c3             	movslq %ebx,%rax</span><br><span class="line">  401138:	8b 04 84             	mov    (%rsp,%rax,4),%eax</span><br><span class="line">  40113b:	39 45 00             	cmp    %eax,0x0(%rbp)</span><br><span class="line">  40113e:	75 05                	jne    401145 &lt;phase_6+0x51&gt;</span><br><span class="line">  401140:	e8 f5 02 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  401145:	83 c3 01             	add    $0x1,%ebx</span><br><span class="line">  401148:	83 fb 05             	cmp    $0x5,%ebx</span><br><span class="line">  40114b:	7e e8                	jle    401135 &lt;phase_6+0x41&gt;</span><br><span class="line">  40114d:	49 83 c5 04          	add    $0x4,%r13</span><br><span class="line">  401151:	eb c1                	jmp    401114 &lt;phase_6+0x20&gt;</span><br></pre></td></tr></table></figure>
+<p>前面读取 6 个数，存取在 <code>rsp</code> ~ <code>rsp + 24</code>，之后通过循环来限制输入。这一段的作用是限制输入的 6 个数均小于等于 6，且互不相等。</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">401153:	48 8d 74 24 18       	lea    0x18(%rsp),%rsi</span><br><span class="line">401158:	4c 89 f0             	mov    %r14,%rax</span><br><span class="line">40115b:	b9 07 00 00 00       	mov    $0x7,%ecx</span><br><span class="line">401160:	89 ca                	mov    %ecx,%edx</span><br><span class="line">401162:	2b 10                	sub    (%rax),%edx</span><br><span class="line">401164:	89 10                	mov    %edx,(%rax)</span><br><span class="line">401166:	48 83 c0 04          	add    $0x4,%rax</span><br><span class="line">40116a:	48 39 f0             	cmp    %rsi,%rax</span><br><span class="line">40116d:	75 f1                	jne    401160 &lt;phase_6+0x6c&gt;</span><br></pre></td></tr></table></figure>
+<p>这一段是让 6 个数(设为 x)变成 7 - x。</p>
+<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">40116f:	be 00 00 00 00       	mov    $0x0,%esi</span><br><span class="line">401174:	eb 21                	jmp    401197 &lt;phase_6+0xa3&gt;</span><br><span class="line">401176:	48 8b 52 08          	mov    0x8(%rdx),%rdx</span><br><span class="line">40117a:	83 c0 01             	add    $0x1,%eax</span><br><span class="line">40117d:	39 c8                	cmp    %ecx,%eax</span><br><span class="line">40117f:	75 f5                	jne    401176 &lt;phase_6+0x82&gt;</span><br><span class="line">401181:	eb 05                	jmp    401188 &lt;phase_6+0x94&gt;</span><br><span class="line"></span><br><span class="line">401183:	ba d0 32 60 00       	mov    $0x6032d0,%edx</span><br><span class="line">401188:	48 89 54 74 20       	mov    %rdx,0x20(%rsp,%rsi,2)</span><br><span class="line">40118d:	48 83 c6 04          	add    $0x4,%rsi</span><br><span class="line">401191:	48 83 fe 18          	cmp    $0x18,%rsi</span><br><span class="line">401195:	74 14                	je     4011ab &lt;phase_6+0xb7&gt;</span><br><span class="line">401197:	8b 0c 34             	mov    (%rsp,%rsi,1),%ecx</span><br><span class="line">40119a:	83 f9 01             	cmp    $0x1,%ecx</span><br><span class="line">40119d:	7e e4                	jle    401183 &lt;phase_6+0x8f&gt;</span><br><span class="line"></span><br><span class="line">40119f:	b8 01 00 00 00       	mov    $0x1,%eax</span><br><span class="line">4011a4:	ba d0 32 60 00       	mov    $0x6032d0,%edx</span><br><span class="line">4011a9:	eb cb                	jmp    401176 &lt;phase_6+0x82&gt;</span><br></pre></td></tr></table></figure>
+<p>看一下 <code>0x6032d0</code> 的内容：</p>
+<blockquote>
+<p>Breakpoint 1, 0x0000000000401183 in phase_6 ()<br>(gdb) x/24w 0x6032d0<br>0x6032d0 <node1>:       0x0000014c      0x00000001      0x006032e0      0x00000000<br>0x6032e0 <node2>:       0x000000a8      0x00000002      0x006032f0      0x00000000<br>0x6032f0 <node3>:       0x0000039c      0x00000003      0x00603300      0x00000000<br>0x603300 <node4>:       0x000002b3      0x00000004      0x00603310      0x00000000<br>0x603310 <node5>:       0x000001dd      0x00000005      0x00603320      0x00000000<br>0x603320 <node6>:       0x000001bb      0x00000006      0x00000000      0x00000000</node6></node5></node4></node3></node2></node1></p>
+</blockquote>
+<p>可以看出这是一个链表，那么再来理解一下代码。首先清空 <code>esi</code>，然后跳转到 <code>0x401197: mov (%rsp,%rsi,1),%ecx</code>，读取数据进 <code>ecx</code>，如果小于等于 <code>1</code>，跳转至 <code>401183: mov $0x6032d0,%edx</code>，读取一个数进 <code>edx</code>，把 <code>edx</code> 写入 <code>0x20(%rsp,%rsi,2)</code>，从 <code>rsp + 0x20</code> 开始，写入 8 个字节，读取下一个数。如果 <code>ecx</code> 大于 1，跳转到 <code>401176: mov 0x8(%rdx),%rdx</code>，让 <code>rdx</code> 指向对应的地址，然后写入 <code>rsp + 0x20</code>。直到 6 个数都被写入，然后跳转进入 <code>0x4011ab</code>。所以总结一下这一段的代码就是根据输入，将 <code>0x6032d0</code> 这段内容写入 <code>rsp + 0x20</code>。最终 6 个数一共 48 个字节被写入 <code>rsp + 0x20</code> ~ <code>rsp + 0x50</code>。</p>
+<h3 id="4"><a href="#4" class="headerlink" title="4"></a>4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">4011ab:	48 8b 5c 24 20       	mov    0x20(%rsp),%rbx</span><br><span class="line">4011b0:	48 8d 44 24 28       	lea    0x28(%rsp),%rax</span><br><span class="line">4011b5:	48 8d 74 24 50       	lea    0x50(%rsp),%rsi</span><br><span class="line">4011ba:	48 89 d9             	mov    %rbx,%rcx</span><br><span class="line">4011bd:	48 8b 10             	mov    (%rax),%rdx</span><br><span class="line">4011c0:	48 89 51 08          	mov    %rdx,0x8(%rcx)</span><br><span class="line">4011c4:	48 83 c0 08          	add    $0x8,%rax</span><br><span class="line">4011c8:	48 39 f0             	cmp    %rsi,%rax</span><br><span class="line">4011cb:	74 05                	je     4011d2 &lt;phase_6+0xde&gt;</span><br><span class="line">4011cd:	48 89 d1             	mov    %rdx,%rcx</span><br><span class="line">4011d0:	eb eb                	jmp    4011bd &lt;phase_6+0xc9&gt;</span><br><span class="line">4011d2:	48 c7 42 08 00 00 00 	movq   $0x0,0x8(%rdx)</span><br></pre></td></tr></table></figure>
+<p>这一段就是重新将链表连接起来。</p>
+<h3 id="5"><a href="#5" class="headerlink" title="5"></a>5</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">4011da:	bd 05 00 00 00       	mov    $0x5,%ebp</span><br><span class="line">4011df:	48 8b 43 08          	mov    0x8(%rbx),%rax</span><br><span class="line">4011e3:	8b 00                	mov    (%rax),%eax</span><br><span class="line">4011e5:	39 03                	cmp    %eax,(%rbx)</span><br><span class="line">4011e7:	7d 05                	jge    4011ee &lt;phase_6+0xfa&gt;</span><br><span class="line">4011e9:	e8 4c 02 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">4011ee:	48 8b 5b 08          	mov    0x8(%rbx),%rbx</span><br><span class="line">4011f2:	83 ed 01             	sub    $0x1,%ebp</span><br><span class="line">4011f5:	75 e8                	jne    4011df &lt;phase_6+0xeb&gt;</span><br><span class="line">4011f7:	48 83 c4 50          	add    $0x50,%rsp</span><br><span class="line">4011fb:	5b                   	pop    %rbx</span><br><span class="line">4011fc:	5d                   	pop    %rbp</span><br><span class="line">4011fd:	41 5c                	pop    %r12</span><br><span class="line">4011ff:	41 5d                	pop    %r13</span><br><span class="line">401201:	41 5e                	pop    %r14</span><br><span class="line">401203:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p>最后一段通过 <code>current &lt; current-&gt;next</code> 使得低四位按照递减的顺序排列，所以就是 <code>3(0x0000039c) 4(0x000002b3) 5(0x000001dd) 6(0x000001bb) 1(0x0000014c) 2(0x000000a8)</code>，因为是 <code>7 - x</code>，所以 <code>x</code> 为 <code>4 3 2 1 6 5</code>。</p>
+<p>第六个字符串答案为 <code>&quot;4 3 2 1 6 5&quot;</code></p>
+<h2 id="step-secret"><a href="#step-secret" class="headerlink" title="step secret"></a>step <u><em><strong>secret</strong></em></u></h2><p>汇编代码中每一个 <code>phase</code> 都挨在一起，然后可以发现 <code>phase_6</code> 之后竟然有一个 <code>secret_phase</code>，以及 <code>bomb.c</code> 中的注释提示：</p>
+<blockquote>
+<p>/* Wow, they got it!  But isn’t something… missing?  Perhaps<br>    * something they overlooked?  Mua ha ha ha ha! */</p>
+</blockquote>
+<p>可以发现还有一个 <code>phase_secret</code>，但是 <code>bomb</code> 程序在输入了正确的 6 个字符串后就退出程序了，这个 <code>phase_secret</code> 程序要怎么进入呢？于是通过 <code>bomb.asm</code> (反编译出来的汇编文件)中去查找，发现在 <code>&lt;phase_defused&gt;</code> 中存在 <code>call 401242 &lt;secret_phase&gt;</code>，而通过 <code>bomb.c</code> 中可知在每一个 <code>phase()</code> 之后都会调用 <code>phase_defused()</code>，那么我们看一下这个 <code>phase_defused()</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">00000000004015c4 &lt;phase_defused&gt;:</span><br><span class="line">  4015c4:	48 83 ec 78          	sub    $0x78,%rsp</span><br><span class="line">  4015c8:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</span><br><span class="line">  4015cf:	00 00 </span><br><span class="line">  4015d1:	48 89 44 24 68       	mov    %rax,0x68(%rsp)</span><br><span class="line">  4015d6:	31 c0                	xor    %eax,%eax</span><br><span class="line">  4015d8:	83 3d 81 21 20 00 06 	cmpl   $0x6,0x202181(%rip)        # 603760 &lt;num_input_strings&gt;</span><br><span class="line">  4015df:	75 5e                	jne    40163f &lt;phase_defused+0x7b&gt;</span><br><span class="line">  4015e1:	4c 8d 44 24 10       	lea    0x10(%rsp),%r8</span><br><span class="line">  4015e6:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</span><br><span class="line">  4015eb:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  4015f0:	be 19 26 40 00       	mov    $0x402619,%esi</span><br><span class="line">  4015f5:	bf 70 38 60 00       	mov    $0x603870,%edi</span><br><span class="line">  4015fa:	e8 f1 f5 ff ff       	call   400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line">  4015ff:	83 f8 03             	cmp    $0x3,%eax</span><br><span class="line">  401602:	75 31                	jne    401635 &lt;phase_defused+0x71&gt;</span><br><span class="line">  401604:	be 22 26 40 00       	mov    $0x402622,%esi</span><br><span class="line">  401609:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</span><br><span class="line">  40160e:	e8 25 fd ff ff       	call   401338 &lt;strings_not_equal&gt;</span><br><span class="line">  401613:	85 c0                	test   %eax,%eax</span><br><span class="line">  401615:	75 1e                	jne    401635 &lt;phase_defused+0x71&gt;</span><br><span class="line">  401617:	bf f8 24 40 00       	mov    $0x4024f8,%edi</span><br><span class="line">  40161c:	e8 ef f4 ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  401621:	bf 20 25 40 00       	mov    $0x402520,%edi</span><br><span class="line">  401626:	e8 e5 f4 ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  40162b:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  401630:	e8 0d fc ff ff       	call   401242 &lt;secret_phase&gt;</span><br><span class="line">  401635:	bf 58 25 40 00       	mov    $0x402558,%edi</span><br><span class="line">  40163a:	e8 d1 f4 ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  40163f:	48 8b 44 24 68       	mov    0x68(%rsp),%rax</span><br><span class="line">  401644:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax</span><br><span class="line">  40164b:	00 00 </span><br><span class="line">  40164d:	74 05                	je     401654 &lt;phase_defused+0x90&gt;</span><br><span class="line">  40164f:	e8 dc f4 ff ff       	call   400b30 &lt;__stack_chk_fail@plt&gt;</span><br><span class="line">  401654:	48 83 c4 78          	add    $0x78,%rsp</span><br><span class="line">  401658:	c3                   	ret    </span><br><span class="line">  401659:	90                   	nop</span><br><span class="line">  40165a:	90                   	nop</span><br><span class="line">  40165b:	90                   	nop</span><br><span class="line">  40165c:	90                   	nop</span><br><span class="line">  40165d:	90                   	nop</span><br><span class="line">  40165e:	90                   	nop</span><br><span class="line">  40165f:	90                   	nop</span><br></pre></td></tr></table></figure>
+<p>可以看到在调用 <code>secret_phase</code> 之前判断了 <code>num_input_strings</code>，所以只有在输入了六个正确的字符串之后才会调用了。然后还调用了 <code>&lt;__isoc99_sscanf@plt&gt;</code>，查看 <code>0x402619</code> 内容为 <code>&quot;%d %d %s&quot;</code>，<code>0x603870</code> 内容为 <code>7 0</code>，有点像第四个字符串的内容。所以这段库函数为 <code>sscanf(0x603870,&quot;%d %d %s&quot;,0x8(%rsp),0xc(%rsp),0x10(%rsp))</code>。结合后面 <code>4015ff: cmp $0x3,%eax</code> 明显 <code>0x603870</code> 还缺一个字符串。后面将字符串与 <code>0x402622</code> 对比：</p>
+<blockquote>
+<p>(gdb) x /s 0x603870<br>0x603870 &lt;input_strings+240&gt;:   “”<br>(gdb) x /s 0x402622<br>0x402622:       “DrEvil”</p>
+</blockquote>
+<p>发现字符串应该是 <code>DrEvil</code>。所以应该是在第四阶段的输入后面加上这个，为什么是这样，有兴趣的朋友可以进一步阅读一下 <code>read_line</code> 和 <code>skip</code>，这里就不深究了。</p>
+<p>进入 <code>secret_phase</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">0000000000401242 &lt;secret_phase&gt;:</span><br><span class="line">  401242:	53                   	push   %rbx</span><br><span class="line">  401243:	e8 56 02 00 00       	call   40149e &lt;read_line&gt;</span><br><span class="line">  401248:	ba 0a 00 00 00       	mov    $0xa,%edx</span><br><span class="line">  40124d:	be 00 00 00 00       	mov    $0x0,%esi</span><br><span class="line">  401252:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  401255:	e8 76 f9 ff ff       	call   400bd0 &lt;strtol@plt&gt;</span><br><span class="line">  40125a:	48 89 c3             	mov    %rax,%rbx</span><br><span class="line">  40125d:	8d 40 ff             	lea    -0x1(%rax),%eax</span><br><span class="line">  401260:	3d e8 03 00 00       	cmp    $0x3e8,%eax</span><br><span class="line">  401265:	76 05                	jbe    40126c &lt;secret_phase+0x2a&gt;</span><br><span class="line">  401267:	e8 ce 01 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  40126c:	89 de                	mov    %ebx,%esi</span><br><span class="line">  40126e:	bf f0 30 60 00       	mov    $0x6030f0,%edi</span><br><span class="line">  401273:	e8 8c ff ff ff       	call   401204 &lt;fun7&gt;</span><br><span class="line">  401278:	83 f8 02             	cmp    $0x2,%eax</span><br><span class="line">  40127b:	74 05                	je     401282 &lt;secret_phase+0x40&gt;</span><br><span class="line">  40127d:	e8 b8 01 00 00       	call   40143a &lt;explode_bomb&gt;</span><br><span class="line">  401282:	bf 38 24 40 00       	mov    $0x402438,%edi</span><br><span class="line">  401287:	e8 84 f8 ff ff       	call   400b10 &lt;puts@plt&gt;</span><br><span class="line">  40128c:	e8 33 03 00 00       	call   4015c4 &lt;phase_defused&gt;</span><br><span class="line">  401291:	5b                   	pop    %rbx</span><br><span class="line">  401292:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p>首先调用 <code>read_line</code>，然后把返回值给了 <code>rdi</code>，<code>strtol@plt</code> 应该是把字符串变为 <code>long</code> 型整数，<code>cmp $0x3e8,%eax</code> 说明需要输入一个小于等于 <code>0x3e8</code> 数。调用 <code>fun7</code> 之后把返回值与 2 进行比较，不然调用 <code>explode_bomb</code> 说明 <code>fun7</code> 返回值需是 <code>2</code>。再看看 <code>0x6030f0</code> 的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(gdb) x /120xw 0x6030f0</span><br><span class="line">0x6030f0 &lt;n1&gt;:  0x00000024      0x00000000      0x00603110      0x00000000</span><br><span class="line">0x603100 &lt;n1+16&gt;:       0x00603130      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603110 &lt;n21&gt;: 0x00000008      0x00000000      0x00603190      0x00000000</span><br><span class="line">0x603120 &lt;n21+16&gt;:      0x00603150      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603130 &lt;n22&gt;: 0x00000032      0x00000000      0x00603170      0x00000000</span><br><span class="line">0x603140 &lt;n22+16&gt;:      0x006031b0      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603150 &lt;n32&gt;: 0x00000016      0x00000000      0x00603270      0x00000000</span><br><span class="line">0x603160 &lt;n32+16&gt;:      0x00603230      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603170 &lt;n33&gt;: 0x0000002d      0x00000000      0x006031d0      0x00000000</span><br><span class="line">0x603180 &lt;n33+16&gt;:      0x00603290      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603190 &lt;n31&gt;: 0x00000006      0x00000000      0x006031f0      0x00000000</span><br><span class="line">0x6031a0 &lt;n31+16&gt;:      0x00603250      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6031b0 &lt;n34&gt;: 0x0000006b      0x00000000      0x00603210      0x00000000</span><br><span class="line">0x6031c0 &lt;n34+16&gt;:      0x006032b0      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6031d0 &lt;n45&gt;: 0x00000028      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6031e0 &lt;n45+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6031f0 &lt;n41&gt;: 0x00000001      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603200 &lt;n41+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603210 &lt;n47&gt;: 0x00000063      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603220 &lt;n47+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603230 &lt;n44&gt;: 0x00000023      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603240 &lt;n44+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603250 &lt;n42&gt;: 0x00000007      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603260 &lt;n42+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603270 &lt;n43&gt;: 0x00000014      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603280 &lt;n43+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x603290 &lt;n46&gt;: 0x0000002f      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6032a0 &lt;n46+16&gt;:      0x00000000      0x00000000      0x00000000      0x00000000</span><br><span class="line">0x6032b0 &lt;n48&gt;: 0x000003e9      0x00000000      0x00000000      0x00000000</span><br></pre></td></tr></table></figure>
+<p>名称也提示我们了，这是一颗二叉树的结构。</p>
+<p>下面是 <code>fun7</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">0000000000401204 &lt;fun7&gt;:</span><br><span class="line">  401204:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  401208:	48 85 ff             	test   %rdi,%rdi</span><br><span class="line">  40120b:	74 2b                	je     401238 &lt;fun7+0x34&gt;</span><br><span class="line">  40120d:	8b 17                	mov    (%rdi),%edx</span><br><span class="line">  40120f:	39 f2                	cmp    %esi,%edx</span><br><span class="line">  401211:	7e 0d                	jle    401220 &lt;fun7+0x1c&gt;</span><br><span class="line">  401213:	48 8b 7f 08          	mov    0x8(%rdi),%rdi</span><br><span class="line">  401217:	e8 e8 ff ff ff       	call   401204 &lt;fun7&gt;</span><br><span class="line">  40121c:	01 c0                	add    %eax,%eax</span><br><span class="line">  40121e:	eb 1d                	jmp    40123d &lt;fun7+0x39&gt;</span><br><span class="line">  401220:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  401225:	39 f2                	cmp    %esi,%edx</span><br><span class="line">  401227:	74 14                	je     40123d &lt;fun7+0x39&gt;</span><br><span class="line">  401229:	48 8b 7f 10          	mov    0x10(%rdi),%rdi</span><br><span class="line">  40122d:	e8 d2 ff ff ff       	call   401204 &lt;fun7&gt;</span><br><span class="line">  401232:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax</span><br><span class="line">  401236:	eb 05                	jmp    40123d &lt;fun7+0x39&gt;</span><br><span class="line">  401238:	b8 ff ff ff ff       	mov    $0xffffffff,%eax</span><br><span class="line">  40123d:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  401241:	c3                   	ret    </span><br></pre></td></tr></table></figure>
+<p>最重要的 15 行代码将 <code>rdi</code> 移到它的右子树的位置然后调用 <code>fun7</code>，返回后令 <code>eax = 2 * rax + 1</code>。如果输入的数小于结点，则会进入第 8 行，<code>rdi</code> 移到左子树，<code>eax = 2 * rax</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun7</span><span class="params">(struct TreeNode* t, <span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (t == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> (x &lt; t-&gt;value) <span class="keyword">return</span> <span class="number">2</span> * fun7(t-&gt;left, x);</span><br><span class="line">  <span class="keyword">if</span> (x == t-&gt;value) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> (<span class="number">2</span> * fun7(t-&gt;right, x)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要返回 2，根据上图的二叉树，<code>phase_secret</code> 输入的数可以是 <code>0x16</code> 和 <code>0x14</code>。</p>
+<p><code>secret_phase</code> 字符串答案为 <code>&quot;22&quot;</code> 或 <code>&quot;20&quot;</code></p>
+<h2 id="拆除炸弹"><a href="#拆除炸弹" class="headerlink" title="拆除炸弹"></a>拆除炸弹</h2><p>至此，我们已经得到了所有的字符串答案，接下来让我们一起拆除炸弹吧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Border relations with Canada have never been better.</span><br><span class="line">1 2 4 8 16 32</span><br><span class="line">0 207</span><br><span class="line">7 0 DrEvil</span><br><span class="line">ionefg</span><br><span class="line">4 3 2 1 6 5</span><br><span class="line">20</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/14/2022-3-14/2022-3-14_5.png"></p>
+<p>成功拆除炸弹！祝贺每一位 Coder。愿大家都能成为代码界的拆弹专家。</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>本人前前后后花了 2 - 3 天完成这个实验，断断续续的，一边学习 CSAPP 的第三章的知识，一边做这个 Bomb Lab，看书的时候觉得知识很枯燥，于是就找了这个 Lab 来看，瞬间就感觉书上的知识不枯燥了。在看 Lab 期间也从网上查阅了很多别人的做法，这篇 Blog 也参考了网上的大神们，感觉学习到了不少知识。希望可以继续加油！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>黎酝
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liyun-666.github.io/2022/03/14/2022-3-14/" title="lab2 Bomblab(拆除炸弹实验)">https://liyun-666.github.io/2022/03/14/2022-3-14/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/01/2022-3-1/" rel="prev" title="异常的类别">
+                  <i class="fa fa-chevron-left"></i> 异常的类别
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2022-01 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黎酝</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
