@@ -133,18 +133,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,6 +181,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/01/18/2022-1-18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="黎酝">
+      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黎酝的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/18/2022-1-18/" class="post-title-link" itemprop="url">WebSocket 实现通讯</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-18 15:49:00" itemprop="dateCreated datePublished" datetime="2022-01-18T15:49:00+08:00">2022-01-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>因为之前开发过软件工程的大作业，是一个商品交易系统，前端是微信小程序，当时时间比较紧凑，没有搭后台，直接用的云开发，然后在 js 中直接操作云环境的数据库。因为本来准备开发一个聊天的功能的，当时没来得及去学 WebSocket ，就直接强行 发消息=向数据库插入数据、查信息=向数据库查询数据，所以性能低下就不说了，也不能实现真正的即时通讯、即时聊天功能，今天好好的学习了一下 WebSocket ，写了两个客户端通讯的 demo 出来，稍微改一下也可以是多客户端，变成群聊。 Websocket 前端就直接选择了浏览器 javascript （微信小程序的话可以参考官方文档的 websocket ），后端的话纠结了挺久的，本来是打算 c++、python、java、rust 都试着写一份的，但是在看 c++ 的环境搭建的时候就把我劝退了（ python 好像可以 pip 安装 websocket 包，可能会容易一点），所以最终还是选择用 node.js 写个 websocket server demo 出来。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/18/2022-1-18/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

@@ -133,18 +133,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,6 +181,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/04/12/2022-4-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="黎酝">
+      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黎酝的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/12/2022-4-12/" class="post-title-link" itemprop="url">Lab Utilities</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-04-12 08:12:54 / 修改时间：10:37:45" itemprop="dateCreated datePublished" datetime="2022-04-12T08:12:54+08:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MIT-6-S081/" itemprop="url" rel="index"><span itemprop="name">MIT 6.S081</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><blockquote>
+<p>操作系统：Arch Linux<br>内核版本：5.17.1-arch1-1（64-位）</p>
+</blockquote>
+<p>这是 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/">课程官网</a>，以下内容都可以在课程官网找到。</p>
+<ol>
+<li>首先需要安装一些 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/tools.html">tools</a></li>
+<li>阅读 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/labs/guidance.html">实验指导</a></li>
+<li>还有一些 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/reference.html">阅读材料</a>，包括 Unix、Qemu、RISC-V</li>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6.html">xv6</a>，<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">书</a></li>
+</ol>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本次实验可以让我们熟悉 xv6 以及系统调用。</p>
+<h2 id="Boot-xv6-easy"><a href="#Boot-xv6-easy" class="headerlink" title="Boot xv6 (easy)"></a>Boot xv6 (easy)</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://g.csail.mit.edu/xv6-labs-2021</span><br><span class="line"><span class="built_in">cd</span> xv6-labs-2021</span><br><span class="line">git checkout util</span><br><span class="line">make qemu</span><br></pre></td></tr></table></figure>
+<p>这样就启动了 xv6，可以输入 ls 查看当前文件，ctrl-p 查看进程。输入 ctrl-a x 退出。</p>
+<p><img src="/2022/04/12/2022-4-12/2022-4-12_1.png"></p>
+<h2 id="sleep-easy"><a href="#sleep-easy" class="headerlink" title="sleep (easy)"></a>sleep (easy)</h2><blockquote>
+<p>Implement the UNIX program sleep for xv6; your sleep should pause for a user-specified number of ticks. A tick is a notion of time defined by the xv6 kernel, namely the time between two interrupts from the timer chip. Your solution should be in the file user/sleep.c.</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sleep.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc &lt; <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;usage: sleep &lt;ticks&gt;\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	sleep(atoi(argv[<span class="number">1</span>]));</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这里的 sleep 的参数单位不是秒，具体实现在 <code>kernel/sysproc.c</code> 中的 <code>sys_sleep</code>。然后把 sleep 加入 Makefile 中就可以 make qemu 运行使用 sleep 系统调用了。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">UPROGS=\</span><br><span class="line">	$U/_cat\</span><br><span class="line">	$U/_echo\</span><br><span class="line">	$U/_forktest\</span><br><span class="line">	$U/_grep\</span><br><span class="line">	$U/_init\</span><br><span class="line">	$U/_kill\</span><br><span class="line">	$U/_ln\</span><br><span class="line">	$U/_ls\</span><br><span class="line">	$U/_mkdir\</span><br><span class="line">	$U/_rm\</span><br><span class="line">	$U/_sh\</span><br><span class="line">	$U/_stressfs\</span><br><span class="line">	$U/_usertests\</span><br><span class="line">	$U/_grind\</span><br><span class="line">	$U/_wc\</span><br><span class="line">	$U/_zombie\</span><br><span class="line">	$U/_sleep\</span><br></pre></td></tr></table></figure>
+
+<h2 id="pingpong-easy"><a href="#pingpong-easy" class="headerlink" title="pingpong (easy)"></a>pingpong (easy)</h2><blockquote>
+<p>Write a program that uses UNIX system calls to ‘’ping-pong’’ a byte between two processes over a pair of pipes, one for each direction. The parent should send a byte to the child; the child should print “<pid>: received ping”, where <pid> is its process ID, write the byte on the pipe to the parent, and exit; the parent should read the byte from the child, print “<pid>: received pong”, and exit. Your solution should be in the file user/pingpong.c.</pid></pid></pid></p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pingpong.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p2c[<span class="number">2</span>], c2p[<span class="number">2</span>];</span><br><span class="line">	pipe(p2c); <span class="comment">// 父进程 -&gt; 子进程</span></span><br><span class="line">	pipe(c2p); <span class="comment">// 子进程 -&gt; 父进程</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(fork() != <span class="number">0</span>) <span class="comment">// parent</span></span><br><span class="line">    &#123;</span><br><span class="line">		write(p2c[<span class="number">1</span>], <span class="string">&quot;hello child!&quot;</span>, <span class="number">13</span>);</span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">14</span>];</span><br><span class="line">		read(c2p[<span class="number">0</span>], &amp;buf, <span class="number">14</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d: received pong\n&quot;</span>, getpid());</span><br><span class="line">		wait(<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="comment">// child</span></span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">13</span>];</span><br><span class="line">		read(p2c[<span class="number">0</span>], &amp;buf, <span class="number">13</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d: received ping\n&quot;</span>, getpid());</span><br><span class="line">		write(c2p[<span class="number">1</span>], <span class="string">&quot;hello parent!&quot;</span>, <span class="number">14</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用了两个管道进行通信，如果使用一个管道的话一定要保证父进程写完管道后不能自己直接读取了，要让子进程先读取管道。</p>
+<h2 id="prime"><a href="#prime" class="headerlink" title="prime ()"></a>prime ()</h2>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -920,86 +1019,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/01/27/2022-1-27/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liyun-666.github.io/2022/01/18/2022-1-18/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="黎酝">
-      <meta itemprop="description" content="爱意东升日落，浪漫至死不渝">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="黎酝的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/18/2022-1-18/" class="post-title-link" itemprop="url">WebSocket 实现通讯</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-18 15:49:00" itemprop="dateCreated datePublished" datetime="2022-01-18T15:49:00+08:00">2022-01-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>因为之前开发过软件工程的大作业，是一个商品交易系统，前端是微信小程序，当时时间比较紧凑，没有搭后台，直接用的云开发，然后在 js 中直接操作云环境的数据库。因为本来准备开发一个聊天的功能的，当时没来得及去学 WebSocket ，就直接强行 发消息=向数据库插入数据、查信息=向数据库查询数据，所以性能低下就不说了，也不能实现真正的即时通讯、即时聊天功能，今天好好的学习了一下 WebSocket ，写了两个客户端通讯的 demo 出来，稍微改一下也可以是多客户端，变成群聊。 Websocket 前端就直接选择了浏览器 javascript （微信小程序的话可以参考官方文档的 websocket ），后端的话纠结了挺久的，本来是打算 c++、python、java、rust 都试着写一份的，但是在看 c++ 的环境搭建的时候就把我劝退了（ python 好像可以 pip 安装 websocket 包，可能会容易一点），所以最终还是选择用 node.js 写个 websocket server demo 出来。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/18/2022-1-18/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
