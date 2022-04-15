@@ -462,6 +462,26 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   font-weight: bold;
 }
 
+.highlight:hover .copy-btn,
+pre:hover .copy-btn {
+  opacity: 1;
+}
+.copy-btn {
+  color: #333;
+  cursor: pointer;
+  line-height: 1.6;
+  opacity: 0;
+  padding: 2px 6px;
+  position: absolute;
+  transition: opacity 0.2s ease-in-out;
+  background-color: #eee;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  font-size: 0.8125em;
+  right: 4px;
+  top: 8px;
+}
 code,
 kbd,
 figure.highlight,
@@ -2136,9 +2156,6 @@ pre code {
 }
 .post-eof {
   background: #ccc;
-  height: 1px;
-  margin: 80px auto 60px;
-  width: 8%;
 }
 .post-block:last-of-type .post-eof {
   display: none;
@@ -2474,7 +2491,7 @@ ul.breadcrumb li:last-child {
 }
 .header-inner {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 20px 20px 20px 20px;
   box-shadow: initial;
   width: 240px;
 }
@@ -2508,7 +2525,7 @@ ul.breadcrumb li:last-child {
   }
 }
 .main-inner {
-  border-radius: initial;
+  border-radius: 20px 20px 20px 20px;
   box-sizing: border-box;
   width: calc(100% - 252px);
 }
@@ -2650,7 +2667,7 @@ ul.breadcrumb li:last-child {
 }
 .sidebar-inner {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 20px;
   box-shadow: initial;
   box-sizing: border-box;
   color: var(--text-color);
@@ -2719,4 +2736,32 @@ ul.breadcrumb li:last-child {
   .pagination {
     margin-bottom: 10px;
   }
+}
+body {
+  background: url("/images/background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 100% 100%;
+}
+.main-inner {
+  opacity: 0.9;
+  background-color: rgba(255,255,255,0);
+  padding: 0px 0px 40px 0px;
+}
+.sidebar {
+  opacity: 0.7;
+}
+.header-inner {
+  opacity: 0.7;
+}
+.footer-inner {
+  color: #000;
+  opacity: 0.7;
+}
+.post-block {
+  background-color: #fff;
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 30px 50px 30px 50px;
+  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
 }
