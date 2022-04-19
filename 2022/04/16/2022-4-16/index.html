@@ -19,12 +19,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liyun-666.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》  洛洛，机车族机战王，是一名来自人类世界的小学六年级学生。充满热情、思绪奔放。聪明可爱的游戏高手，曾是校际电子竞技赛的第二名。起初只将机战战争看作游戏，但进入了游戏世界后，种种磨练让他变得更加勇敢和有正义感，最终成为机车族机器人的绝对领袖">
+<meta name="description" content="OP 能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》  洛洛，机车族机战王，是一名来自人类世界的小学六年级学生。充满热情、思绪奔放。聪明可爱的游戏高手，曾是校际电子竞技赛的第二名。起初只将机战战争看作游戏，但进入了游戏世界后，种种磨练让他变得更加勇敢和有正义感，最终成为机车族机器人的绝对">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lab System calls">
 <meta property="og:url" content="https://liyun-666.github.io/2022/04/16/2022-4-16/index.html">
 <meta property="og:site_name" content="黎酝的博客">
-<meta property="og:description" content="能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》  洛洛，机车族机战王，是一名来自人类世界的小学六年级学生。充满热情、思绪奔放。聪明可爱的游戏高手，曾是校际电子竞技赛的第二名。起初只将机战战争看作游戏，但进入了游戏世界后，种种磨练让他变得更加勇敢和有正义感，最终成为机车族机器人的绝对领袖">
+<meta property="og:description" content="OP 能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》  洛洛，机车族机战王，是一名来自人类世界的小学六年级学生。充满热情、思绪奔放。聪明可爱的游戏高手，曾是校际电子竞技赛的第二名。起初只将机战战争看作游戏，但进入了游戏世界后，种种磨练让他变得更加勇敢和有正义感，最终成为机车族机器人的绝对">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_5.png">
 <meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_6.png">
@@ -132,7 +132,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-call-tracing-moderate"><span class="nav-number">2.</span> <span class="nav-text">System call tracing (moderate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sysinfo-moderate"><span class="nav-number">3.</span> <span class="nav-text">Sysinfo (moderate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">实验总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OP"><span class="nav-number">1.</span> <span class="nav-text">OP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-call-tracing-moderate"><span class="nav-number">3.</span> <span class="nav-text">System call tracing (moderate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sysinfo-moderate"><span class="nav-number">4.</span> <span class="nav-text">Sysinfo (moderate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">实验总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -147,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -251,7 +251,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <blockquote>
+        <h2 id="OP"><a href="#OP" class="headerlink" title="OP"></a>OP</h2><blockquote>
 <p>能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。<br>——————————————–《百变机兽之洛洛历险记》</p>
 </blockquote>
 <p>洛洛，机车族机战王，是一名来自人类世界的小学六年级学生。充满热情、思绪奔放。聪明可爱的游戏高手，曾是校际电子竞技赛的第二名。起初只将机战战争看作游戏，但进入了游戏世界后，种种磨练让他变得更加勇敢和有正义感，最终成为机车族机器人的绝对领袖，多次策划计谋带领同伴度过难关。</p>
@@ -331,7 +331,7 @@
 <p>最后不要忘了加入 Makefile。</p>
 </li>
 </ol>
-<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>添加 time.txt，输入一个数字后运行 make grade。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>添加 time.txt，输入一个数字后运行 make grade。完成 lab 记得 git commit 提交。</p>
 <p><img src="/2022/04/16/2022-4-16/2022-4-16_4.png"></p>
 <h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>通过这次实验了解了内核代码与用户代码之间的区别与联系，同时了解进程相关的代码。燃烧我的 OS！</p>
 
