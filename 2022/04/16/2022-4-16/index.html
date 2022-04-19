@@ -19,13 +19,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liyun-666.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="用户程序可以通过系统调用向操作系统内核请求服务。  系统调用（system calls）, Linux内核, GNU C库（glibc）.   这是本次 lab 指引，关于实验环境和实验资料等更加详细的内容请查看 我的第一个 lab。">
+<meta name="description" content="能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》   在计算机体系中，用户程序可以通过系统调用向操作系统内核请求服务，就像兵队向城池中央请求服务那样。  系统调用（system calls）, Linux内核, GNU C库（glibc）.   这是本次 lab 指引，关于实验环境和实验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lab System calls">
 <meta property="og:url" content="https://liyun-666.github.io/2022/04/16/2022-4-16/index.html">
 <meta property="og:site_name" content="黎酝的博客">
-<meta property="og:description" content="用户程序可以通过系统调用向操作系统内核请求服务。  系统调用（system calls）, Linux内核, GNU C库（glibc）.   这是本次 lab 指引，关于实验环境和实验资料等更加详细的内容请查看 我的第一个 lab。">
+<meta property="og:description" content="能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。——————————————–《百变机兽之洛洛历险记》   在计算机体系中，用户程序可以通过系统调用向操作系统内核请求服务，就像兵队向城池中央请求服务那样。  系统调用（system calls）, Linux内核, GNU C库（glibc）.   这是本次 lab 指引，关于实验环境和实验">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_5.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_6.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_7.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_8.png">
+<meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_9.png">
 <meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_1.svg">
 <meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_2.png">
 <meta property="og:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_3.png">
@@ -35,7 +40,7 @@
 <meta property="article:author" content="黎酝">
 <meta property="article:tag" content="MIT 6.S081">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_1.svg">
+<meta name="twitter:image" content="https://liyun-666.github.io/2022/04/16/2022-4-16/2022-4-16_5.png">
 
 
 <link rel="canonical" href="https://liyun-666.github.io/2022/04/16/2022-4-16/">
@@ -142,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -246,12 +251,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>用户程序可以通过系统调用向操作系统内核请求服务。</p>
+        <blockquote>
+<p>能源之城是机车族的重要战略地点，城主通过令牌控制守护城池，城池易守难攻，成为机车族抗击猛兽族的主要战场。<br>——————————————–《百变机兽之洛洛历险记》</p>
+</blockquote>
+<p><img src="/2022/04/16/2022-4-16/2022-4-16_5.png"><br><img src="/2022/04/16/2022-4-16/2022-4-16_6.png"><br><img src="/2022/04/16/2022-4-16/2022-4-16_7.png"><br><img src="/2022/04/16/2022-4-16/2022-4-16_8.png"><br><img src="/2022/04/16/2022-4-16/2022-4-16_9.png"></p>
+<p>在计算机体系中，用户程序可以通过系统调用向操作系统内核请求服务，就像兵队向城池中央请求服务那样。</p>
 <p><img src="/2022/04/16/2022-4-16/2022-4-16_1.svg"></p>
 <center style="font-size:16px;color:#C0C0C0;text-decoration:underline">系统调用（system calls）, Linux内核, GNU C库（glibc）.</center>
 <br>
 
-<p>这是本次 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/labs/syscall.html">lab 指引</a>，关于实验环境和实验资料等更加详细的内容请查看 <a href="2022-4-12.md">我的第一个 lab</a>。</p>
+<p>这是本次 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/labs/syscall.html">lab 指引</a>，关于实验环境和实验资料等更加详细的内容请查看 <strong>我的第一个 lab</strong>。</p>
 <span id="more"></span>
 
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
@@ -358,6 +367,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/04/19/2022-4-19/" rel="next" title="Lab Page tables">
+                  Lab Page tables <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
