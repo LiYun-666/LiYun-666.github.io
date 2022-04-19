@@ -25,10 +25,11 @@ custom_file_path:
   #postMeta: source/_data/post-meta.njk
   #postBodyEnd: source/_data/post-body-end.njk
   #footer: source/_data/footer.njk
+  footer: source/_data/footer.swig
   #bodyEnd: source/_data/body-end.njk
-  #variable: source/_data/variables.styl
+  variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
-  #style: source/_data/styles.styl
+  style: source/_data/styles.styl
 
 
 # ---------------------------------------------------------------
@@ -37,8 +38,8 @@ custom_file_path:
 
 # Schemes
 #scheme: Muse
-scheme: Mist
-#scheme: Pisces
+#scheme: Mist
+scheme: Pisces
 #scheme: Gemini
 
 # Dark Mode
@@ -367,7 +368,7 @@ codeblock:
     dark: prism-dark
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Available values: default | flat | mac
     style:
 
@@ -861,7 +862,7 @@ pace:
 # Canvas ribbon
 # For more information: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: false
+  enable: true
   size: 300 # The width of the ribbon
   alpha: 0.6 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon
@@ -893,3 +894,6 @@ vendors:
 css: css
 js: js
 images: images
+
+
+cursor_effect: fireworks
