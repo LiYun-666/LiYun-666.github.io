@@ -236,32 +236,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="OP"><a href="#OP" class="headerlink" title="OP"></a>OP</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这是本次 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/labs/cow.html">lab 指引</a>，关于实验环境和实验资料等更加详细的内容请查看 <strong>我的第一个 lab</strong> – <strong>Lab Utilities</strong>。</p>
-<p>实验环境：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git checkout cow</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
-
-<p>本实验需要实现 <code>copy-on-write</code> 写时复制，也就是 <code>fork</code> 创建子进程时，并不实际复制内存空间，当子进程需要对内存进行修改时，才真正的复制空间。</p>
-<p><code>Solution</code> 告诉我们 <code>fork</code> 时，让子进程的 <code>PTE</code> 指向父进程的物理页面，父进程和子进程都将 <code>PTE</code> 标记为不可写，当写时会触发页面错误，然后内核再开始复制内存空间，将 <code>PTE</code> 标记为可写。</p>
-<p>页面释放需要使用一个计数器，当引用为 <code>0</code> 时，页面需要释放。</p>
-<h2 id="Implement-copy-on-write-hard"><a href="#Implement-copy-on-write-hard" class="headerlink" title="Implement copy-on write(hard)"></a>Implement copy-on write(hard)</h2><ol>
-<li>首先修改 <code>uvmcopy()</code> 以将父进程的物理页面映射到子进程，而不是分配新页面。在子进程和父进程的 <code>PTE</code> 中清除 <code>PTE_W</code>：</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 <code>usertrap()</code> 以识别页面错误。当 COW 页面发生缺页时，使用 <code>kalloc()</code> 分配新页面，将旧页面复制到新页面，并将新页面安装到 <code>PTE</code> 中并设置 <code>PTE_W</code>：</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>为每个物理页保留一个“引用计数”，该“引用计数”是指引用该页的用户页表的数量。当<code>kalloc()</code> 分配页面时，将页面的引用计数设置为 1 。当 <code>fork</code> 导致子共享页面时增加页面的引用计数，并在每次任何进程从其页表中删除页面时减少页面的计数。 <code>kfree()</code> 如果其引用计数为零，则应仅将页面放回空闲列表中。可以将这些计数保存在固定大小的整数数组中：</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// kernel/kalloc.c</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>修改 copyout() 以在遇到 COW 页面时使用与页面错误相同的方案。</li>
-</ol>
-<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2>
+          <h2 id="OP"><a href="#OP" class="headerlink" title="OP"></a>OP</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/02/2022-5-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
