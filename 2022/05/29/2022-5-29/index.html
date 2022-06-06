@@ -21,26 +21,28 @@
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liyun-666.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="OP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Lab network driver">
+<meta property="og:title" content="Lab Network driver">
 <meta property="og:url" content="https://liyun-666.github.io/2022/05/29/2022-5-29/index.html">
 <meta property="og:site_name" content="黎酝的博客">
 <meta property="og:description" content="OP">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liyun-666.github.io/2022/05/29/2022-5-29/2022-5-29_1.png">
 <meta property="article:published_time" content="2022-05-29T12:57:14.000Z">
 <meta property="article:modified_time" content="2022-05-29T12:57:14.000Z">
 <meta property="article:author" content="黎酝">
 <meta property="article:tag" content="MIT 6.S081">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liyun-666.github.io/2022/05/29/2022-5-29/2022-5-29_1.png">
 
 
 <link rel="canonical" href="https://liyun-666.github.io/2022/05/29/2022-5-29/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liyun-666.github.io/2022/05/29/2022-5-29/","path":"2022/05/29/2022-5-29/","title":"Lab network driver"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liyun-666.github.io/2022/05/29/2022-5-29/","path":"2022/05/29/2022-5-29/","title":"Lab Network driver"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Lab network driver | 黎酝的博客</title>
+<title>Lab Network driver | 黎酝的博客</title>
   
 
 
@@ -122,7 +124,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OP"><span class="nav-number">1.</span> <span class="nav-text">OP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OP"><span class="nav-number">1.</span> <span class="nav-text">OP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab-networking-Hard"><span class="nav-number">4.</span> <span class="nav-text">Lab: networking(Hard)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">实验总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Lab network driver
+          Lab Network driver
         </h1>
 
         <div class="post-meta-container">
@@ -243,7 +245,39 @@
     <div class="post-body" itemprop="articleBody">
         <h2 id="OP"><a href="#OP" class="headerlink" title="OP"></a>OP</h2><span id="more"></span>
 
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这是本次 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/labs/net.html">lab 指引</a>，关于实验环境和实验资料等更加详细的内容请查看 <strong>我的第一个 lab</strong> – <strong>Lab Utilities</strong>。</p>
+<p>本次实验，我们需要为 NIC 编写设备驱动程序。</p>
+<blockquote>
+<p>In this lab you will write an xv6 device driver for a network interface card (NIC). </p>
+</blockquote>
+<p>实验环境：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git checkout net</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>xv6 的 IP 地址为 <code>10.0.2.15</code>，本机的 IP 地址为 <code>10.0.2.2</code>，当 xv6 向 <code>10.0.2.2</code> 发送数据包时，将会发送到运行 qemu 的真实的计算机上。</p>
+<p>所有传入和传出的数据包记录在文件 <code>packets.pcap</code> 中。显示:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -XXnr packets.pcap</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lab-networking-Hard"><a href="#Lab-networking-Hard" class="headerlink" title="Lab: networking(Hard)"></a>Lab: networking(Hard)</h2><p>完善 <code>int e1000_transmit(struct mbuf *m)</code> 和 <code>static void e1000_recv(void)</code> 两个函数即可。</p>
+<p>重点难点在于需要阅读驱动的手册和文档，不过给的提示已经大概告诉我们需要做什么了，我们可以直接参考网上的别人的做法来理解，结合 lab 的提示我们就可以完成这两个函数了。</p>
+<blockquote>
+<p>当 net.c 中的网络堆栈需要发送数据包时，它会调用 e1000_transmit() 并使用 mbuf 保存要发送的数据包。您的传输代码必须在 TX（传输）环的描述符中放置一个指向数据包数据的指针。struct tx_desc 描述描述符格式。您需要确保每个 mbuf 最终都被释放，但只有在 E1000 完成数据包传输之后（E1000 设置描述符中的E1000_TXD_STAT_DD位来指示这一点）。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// kernel/e1000.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span></span></span><br><span class="line"><span class="function"><span class="title">e1000_transmit</span><span class="params">(struct mbuf *m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  acquire(&amp;e1000_lock); <span class="comment">// 加锁</span></span><br><span class="line"></span><br><span class="line">  uint32 index = regs[E1000_TDT]; <span class="comment">// 获取下一个可用的 buffer 的索引</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tx_desc</span> *<span class="title">desc</span> =</span> &amp;tx_ring[index]; <span class="comment">// 获取 buffer 的描述符，其中存储关于该 buffer 的各种信息</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!(desc-&gt;status &amp; E1000_TXD_STAT_DD)) &#123; <span class="comment">// buffer 中数据未传输完，则代表环形 buffer 列表全部用完，缓冲区不足，返回错误</span></span><br><span class="line">    release(&amp;e1000_lock); <span class="comment">// 解锁</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果缓冲区有之前发送完毕但未释放的 mbuf，则释放</span></span><br><span class="line">  <span class="keyword">if</span>(tx_mbufs[index]) &#123;</span><br><span class="line">    mbuffree(tx_mbufs[index]);</span><br><span class="line">    tx_mbufs[index] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置描述符</span></span><br><span class="line">  desc-&gt;addr = (uint64)(m-&gt;head);</span><br><span class="line">  desc-&gt;length = m-&gt;len;</span><br><span class="line">  desc-&gt;cmd = E1000_TXD_CMD_EOP | E1000_TXD_CMD_RS;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 保留新 mbuf 的指针，方便后续再次用到同一下标时释放。</span></span><br><span class="line">  tx_mbufs[index] = m;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 环形缓冲区内下标增加一。</span></span><br><span class="line">  regs[E1000_TDT] = (regs[E1000_TDT] + <span class="number">1</span>) % TX_RING_SIZE;</span><br><span class="line"></span><br><span class="line">  release(&amp;e1000_lock); <span class="comment">// 解锁</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当 E1000 从以太网接收到每个数据包时，它首先将数据包 DMA 到下一个 RX（接收）环描述符指向的 mbuf，然后产生中断。您的 e1000_recv() 代码必须扫描 RX 环并通过调用 net_rx() 将每个新数据包的 mbuf 传送到网络堆栈（在 net.c 中）。然后，您需要分配一个新的 mbuf 并将其放入描述符中，以便当 E1000 再次到达 RX 环中的那个点时，它会找到一个新的缓冲区来 DMA 一个新的数据包。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// kernel/e1000.c</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span></span></span><br><span class="line"><span class="function"><span class="title">e1000_recv</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    uint32 index = (regs[E1000_RDT] + <span class="number">1</span>) % RX_RING_SIZE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rx_desc</span> *<span class="title">desc</span> =</span> &amp;rx_ring[index];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 所有包接收完毕，退出</span></span><br><span class="line">    <span class="keyword">if</span>(!(desc-&gt;status &amp; E1000_RXD_STAT_DD)) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    rx_mbufs[index]-&gt;len = desc-&gt;length;</span><br><span class="line">    net_rx(rx_mbufs[index]); <span class="comment">// 传递给上层网络栈，上层负责释放 mbuf</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分配新 mbuf</span></span><br><span class="line">    rx_mbufs[index] = mbufalloc(<span class="number">0</span>); </span><br><span class="line">    desc-&gt;addr = (uint64)(rx_mbufs[index]-&gt;head);</span><br><span class="line">    desc-&gt;status = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    regs[E1000_RDT] = index;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>创建文件 <code>time.txt</code> 写入实验时间，<code>make grade</code> 评分：</p>
+<p><img src="/2022/05/29/2022-5-29/2022-5-29_1.png"></p>
+<p>不要忘记 <code>git commit</code> 提交。</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>正如 xv6-book：</p>
+<blockquote>
+<p>驱动程序是操作系统用来管理特定设备的程序代码，它配置设备硬件，告诉设备执行操作，处理产生的中断，并与可能正在等待来自设备的 I/O 的进程交互。驱动程序代码可能很棘手，因为驱动程序与其管理的设备同时执行。此外，驱动程序必须了解设备的硬件接口，这可能很复杂且文档记录不充分。</p>
+</blockquote>
+<p>所以，编写驱动是一件不容易的事情，需要处理好软硬件的交互，查阅文档资料。不过让肉眼可见的设备以你自己想要的方式运行也是一件特别酷的事情呢。</p>
+
     </div>
 
     
@@ -260,7 +294,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://liyun-666.github.io/2022/05/29/2022-5-29/" title="Lab network driver">https://liyun-666.github.io/2022/05/29/2022-5-29/</a>
+      <a href="https://liyun-666.github.io/2022/05/29/2022-5-29/" title="Lab Network driver">https://liyun-666.github.io/2022/05/29/2022-5-29/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
